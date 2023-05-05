@@ -14,7 +14,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Function;
@@ -25,13 +24,9 @@ public class UserRequestHandler implements Function<APIGatewayProxyRequestEvent,
     private final Logger logger = LoggerFactory.getLogger(UserRequestHandler.class);
     private final Gson gson = new Gson();
 
-    @Autowired
     private RegisterNewUserUseCase registerNewUserUseCase;
 
-    @Autowired
     private FindUserByIdQuery findUserByIdQuery;
-
-    public UserRequestHandler() {}
 
     public UserRequestHandler(RegisterNewUserUseCase registerNewUserUseCase, FindUserByIdQuery findUserByIdQuery) {
         this.registerNewUserUseCase = registerNewUserUseCase;
