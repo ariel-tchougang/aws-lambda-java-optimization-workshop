@@ -1,0 +1,6 @@
+applicationType: function
+defaultPackage: com.atn.digital.user
+testFramework: junit
+sourceLanguage: java
+buildTool: maven
+features: [annotation-api, app-name, aws-lambda, java, junit, logback, maven, readme, shade, mockito, yaml]
