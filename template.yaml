@@ -102,7 +102,7 @@ Resources:
     Properties:
       CodeUri: demo-micronaut-app-lambda-request-handler/target/demo-micronaut-app-lambda-request-handler-1.0.0-aws.jar
       FunctionName: workshop-micronaut-lambda-request-handler
-      Handler: io.micronaut.function.aws.proxy.MicronautLambdaContainerHandler::handleRequest
+      Handler: io.micronaut.function.aws.proxy.MicronautLambdaContainerHandler
       AutoPublishAlias: workshop
       Events:
         GetOne:
