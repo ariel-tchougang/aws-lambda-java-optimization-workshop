@@ -172,6 +172,12 @@
                 <version>${micronaut.version}</version>
             </dependency>
             <dependency>
+                <groupId>io.micronaut.aws</groupId>
+                <artifactId>micronaut-function-aws-api-proxy</artifactId>
+                <version>${micronaut.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>io.micronaut</groupId>
                 <artifactId>micronaut-runtime</artifactId>
                 <version>${micronaut.version}</version>
