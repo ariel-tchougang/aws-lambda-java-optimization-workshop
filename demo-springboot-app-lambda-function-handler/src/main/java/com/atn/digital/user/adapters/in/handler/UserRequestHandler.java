@@ -12,22 +12,31 @@ import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Function;
 
-@RequiredArgsConstructor
 @Component
 public class UserRequestHandler implements Function<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
     private final Logger logger = LoggerFactory.getLogger(UserRequestHandler.class);
     private final Gson gson = new Gson();
 
-    private final RegisterNewUserUseCase registerNewUserUseCase;
-    private final FindUserByIdQuery findUserByIdQuery;
+    @Autowired
+    private RegisterNewUserUseCase registerNewUserUseCase;
+
+    @Autowired
+    private FindUserByIdQuery findUserByIdQuery;
+
+    public UserRequestHandler() {}
+
+    public UserRequestHandler(RegisterNewUserUseCase registerNewUserUseCase, FindUserByIdQuery findUserByIdQuery) {
+        this.registerNewUserUseCase = registerNewUserUseCase;
+        this.findUserByIdQuery = findUserByIdQuery;
+    }
 
     @Override
     public APIGatewayProxyResponseEvent apply(APIGatewayProxyRequestEvent event) {
@@ -35,9 +44,13 @@ public class UserRequestHandler implements Function<APIGatewayProxyRequestEvent,
         logger.debug("httpMethod = " + method);
 
         switch (method) {
-            case "GET": return handleGet(event);
-            case "POST": return handlePost(event);
-            default: {
+            case "GET" -> {
+                return handleGet(event);
+            }
+            case "POST" -> {
+                return handlePost(event);
+            }
+            default -> {
                 APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
                 response.setStatusCode(405);
                 return response;

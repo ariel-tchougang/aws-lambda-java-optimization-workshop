@@ -48,9 +48,13 @@ public class UserRequestHandler implements RequestHandler<APIGatewayProxyRequest
         context.getLogger().log("httpMethod = " + method);
 
         switch (method) {
-            case "GET": return handleGet(event, context);
-            case "POST": return handlePost(event, context);
-            default: {
+            case "GET" -> {
+                return handleGet(event, context);
+            }
+            case "POST" -> {
+                return handlePost(event, context);
+            }
+            default -> {
                 APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
                 response.setStatusCode(405);
                 return response;

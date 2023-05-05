@@ -22,12 +22,9 @@ public class UserRequestHandler extends MicronautRequestHandler<APIGatewayProxyR
 
     private final Logger logger = LoggerFactory.getLogger(UserRequestHandler.class);
     private final Gson gson = new Gson();
+    private final UserService userService;
 
     @Inject
-    private UserService userService;
-
-    public UserRequestHandler() {}
-
     public UserRequestHandler(UserService userService) {
         this.userService = userService;
     }
@@ -38,9 +35,13 @@ public class UserRequestHandler extends MicronautRequestHandler<APIGatewayProxyR
         logger.debug("httpMethod = " + method);
 
         switch (method) {
-            case "GET": return handleGet(event);
-            case "POST": return handlePost(event);
-            default: {
+            case "GET" -> {
+                return handleGet(event);
+            }
+            case "POST" -> {
+                return handlePost(event);
+            }
+            default -> {
                 APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
                 response.setStatusCode(405);
                 return response;
