@@ -16,7 +16,7 @@ public class FindUserByIdController {
 
     private final FindUserByIdQuery query;
 
-    @GetMapping("/api/v1/users/{userId}")
+    @GetMapping("/serverless-java-container/users/{userId}")
     public ResponseEntity<UserDto> findByUserId(@PathVariable("userId") String userId) {
         User user = query.findByUserId(new UserId(userId));
         UserDto userDto = new UserDto(

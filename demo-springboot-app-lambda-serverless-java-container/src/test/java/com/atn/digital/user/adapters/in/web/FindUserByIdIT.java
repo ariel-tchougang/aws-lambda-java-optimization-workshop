@@ -46,7 +46,7 @@ class FindUserByIdIT {
         HttpEntity<Void> request = new HttpEntity<>(null, headers);
 
         ResponseEntity<UserDto> response =  restTemplate.exchange(
-                "/api/v1/users/{userId}",
+                "/serverless-java-container/users/{userId}",
                 HttpMethod.GET,
                 request,
                 UserDto.class,
@@ -69,7 +69,7 @@ class FindUserByIdIT {
         HttpEntity<Void> request = new HttpEntity<>(null, headers);
 
         ResponseEntity<String> response =  restTemplate.exchange(
-                "/api/v1/users/{userId}",
+                "/serverless-java-container/users/{userId}",
                 HttpMethod.GET,
                 request,
                 String.class,
@@ -87,7 +87,7 @@ class FindUserByIdIT {
         HttpEntity<Void> request = new HttpEntity<>(null, headers);
 
         ResponseEntity<String> response =  restTemplate.exchange(
-                "/api/v1/users/{userId}",
+                "/serverless-java-container/users/{userId}",
                 HttpMethod.GET,
                 request,
                 String.class,
@@ -105,7 +105,7 @@ class FindUserByIdIT {
         HttpEntity<Void> request = new HttpEntity<>(null, headers);
 
         ResponseEntity<String> response =  restTemplate.exchange(
-                "/api/v1/users/{userId}",
+                "/serverless-java-container/users/{userId}",
                 HttpMethod.GET,
                 request,
                 String.class,
@@ -123,7 +123,7 @@ class FindUserByIdIT {
         HttpEntity<Void> request = new HttpEntity<>(null, headers);
 
         ResponseEntity<String> response =  restTemplate.exchange(
-                "/api/v1/users/{userId}",
+                "/serverless-java-container/users/{userId}",
                 HttpMethod.GET,
                 request,
                 String.class,

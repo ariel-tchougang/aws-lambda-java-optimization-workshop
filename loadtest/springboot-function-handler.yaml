@@ -1,0 +1,23 @@
+config:
+  phases:
+    - duration: 60
+      arrivalRate: 100
+      name: Loadtest with 100 concurrent requests for 60 seconds
+  http:
+    timeout: 30
+  processor: "./randomName.js"
+scenarios:
+  - flow:
+      - function: "generateRandomName"
+      - post:
+          url: "/Prod/springboot-function-handler/users"
+          json:
+            firstName: "{{ randomFirstName }}"
+            lastName: "{{ randomLastName }}"
+            email: "{{ randomEmail }}"
+          capture:
+            - json: "$.id"
+              as: "userId"
+      - get:
+          url: "/Prod/springboot-function-handler/users/{{ userId }}"
+

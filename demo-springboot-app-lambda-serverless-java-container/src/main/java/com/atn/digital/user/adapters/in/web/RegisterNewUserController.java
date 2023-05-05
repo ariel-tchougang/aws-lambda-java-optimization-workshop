@@ -16,7 +16,7 @@ public class RegisterNewUserController {
 
     private final RegisterNewUserUseCase useCase;
 
-    @PostMapping("/api/v1/users")
+    @PostMapping("/serverless-java-container/users")
     public ResponseEntity<UserIdDto> registerNewUser(@RequestBody RegisterNewUserWeb newUserWeb) {
         RegisterNewUserCommand newUserCommand = new RegisterNewUserCommand(
                 newUserWeb.getFirstName(),

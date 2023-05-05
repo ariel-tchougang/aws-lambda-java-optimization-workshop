@@ -45,7 +45,7 @@ class RegisterNewUserIT {
         HttpEntity<RegisterNewUserWeb> request = new HttpEntity<>(webInput, headers);
 
         ResponseEntity<UserIdDto> response =  restTemplate.exchange(
-                "/api/v1/users",
+                "/serverless-java-container/users",
                 HttpMethod.POST,
                 request,
                 UserIdDto.class
@@ -72,7 +72,7 @@ class RegisterNewUserIT {
         HttpEntity<RegisterNewUserWeb> request = new HttpEntity<>(null, headers);
 
         ResponseEntity<UserIdDto> response =  restTemplate.exchange(
-                "/api/v1/users",
+                "/serverless-java-container/users",
                 HttpMethod.POST,
                 request,
                 UserIdDto.class
@@ -91,7 +91,7 @@ class RegisterNewUserIT {
         HttpEntity<RegisterNewUserWeb> request = new HttpEntity<>(webInput, headers);
 
         ResponseEntity<String> response =  restTemplate.exchange(
-                "/api/v1/users",
+                "/serverless-java-container/users",
                 HttpMethod.POST,
                 request,
                 String.class
