@@ -203,6 +203,23 @@
 					<shadedArtifactAttached>true</shadedArtifactAttached>
 					<shadedClassifierName>aws</shadedClassifierName>
 				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<createDependencyReducedPom>false</createDependencyReducedPom>
+							<transformers>
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ServicesResourceTransformer"/>
+								<transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+									<mainClass>com.atn.digital.user.adapters.in.handler.UserRequestHandler</mainClass>
+								</transformer>
+							</transformers>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

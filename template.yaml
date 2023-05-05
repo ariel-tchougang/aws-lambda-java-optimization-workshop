@@ -78,7 +78,7 @@ Resources:
   SpringbootLambdaFunctionHandler:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: demo-springboot-app-lambda-function-handler/target/demo-springboot-app-lambda-function-handler-1.0.0.jar
+      CodeUri: demo-springboot-app-lambda-function-handler/target/demo-springboot-app-lambda-function-handler-1.0.0-aws.jar
       FunctionName: workshop-springboot-lambda-function-handler
       Handler: com.atn.digital.user.adapters.in.handler.UserRequestHandler::apply
       AutoPublishAlias: workshop
@@ -100,7 +100,7 @@ Resources:
   MicronautLambdaRequestHandler:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: demo-micronaut-app-lambda-request-handler/target/demo-micronaut-app-lambda-request-handler-1.0.0.jar
+      CodeUri: demo-micronaut-app-lambda-request-handler/target/demo-micronaut-app-lambda-request-handler-1.0.0-aws.jar
       FunctionName: workshop-micronaut-lambda-request-handler
       Handler: com.atn.digital.user.adapters.in.handler.UserRequestHandler::execute
       AutoPublishAlias: workshop
