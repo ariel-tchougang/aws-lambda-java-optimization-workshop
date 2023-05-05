@@ -8,31 +8,12 @@ Globals:
     Timeout: 30
     Runtime: java17
     MemorySize: 512
-    AutoPublishAlias: workshop
     Environment:
       Variables:
         TABLE_NAME: !Ref DynamoDBTableName
         # JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
     Architectures:
       - x86_64
-    Policies:
-      - Statement:
-          - Sid: AWSLambdaBasicLogsActions
-            Effect: Allow
-            Action:
-              - logs:CreateLogGroup
-              - logs:CreateLogStream
-              - logs:PutLogEvents
-            Resource: '*'
-      - Statement:
-          - Sid: DynamoBasic
-            Effect: Allow
-            Action:
-              - dynamodb:Scan
-              - dynamodb:PutItem
-              - dynamodb:DeleteItem
-              - dynamodb:GetItem
-            Resource: !GetAtt DynamoDbTable.Arn
   Api:
     TracingEnabled: True
 
@@ -43,12 +24,42 @@ Parameters:
     Default: Users
 
 Resources:
+  LambdaLoggingPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Description: Allows basic logging actions for Lambda functions
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - logs:CreateLogGroup
+              - logs:CreateLogStream
+              - logs:PutLogEvents
+            Resource: '*'
+
+  DynamoDbBasicPolicy:
+    Type: AWS::IAM::ManagedPolicy
+    Properties:
+      Description: Allows basic DynamoDB actions for Lambda functions
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Action:
+              - dynamodb:Scan
+              - dynamodb:PutItem
+              - dynamodb:DeleteItem
+              - dynamodb:GetItem
+            Resource: !GetAtt DynamoDbTable.Arn
+
   SpringbootServerlessJavaContainer:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: demo-springboot-app-lambda-serverless-java-container/target/demo-springboot-app-lambda-serverless-java-container-1.0.0.jar
       FunctionName: workshop-springboot-serverless-java-container
       Handler: com.atn.digital.user.StreamLambdaHandler::handleRequest
+      AutoPublishAlias: workshop
       Events:
         GetOne:
           Type: Api
@@ -60,6 +71,9 @@ Resources:
           Properties:
             Path: /serverless-java-container/users
             Method: POST
+      Policies:
+        - !Ref LambdaLoggingPolicy
+        - !Ref DynamoDbBasicPolicy
 
   SpringbootLambdaFunctionHandler:
     Type: AWS::Serverless::Function
@@ -67,6 +81,7 @@ Resources:
       CodeUri: demo-springboot-app-lambda-function-handler/target/demo-springboot-app-lambda-function-handler-1.0.0.jar
       FunctionName: workshop-springboot-lambda-function-handler
       Handler: com.atn.digital.user.adapters.in.handler.UserRequestHandler::apply
+      AutoPublishAlias: workshop
       Events:
         GetOne:
           Type: Api
@@ -78,6 +93,9 @@ Resources:
           Properties:
             Path: /springboot-function-handler/users
             Method: POST
+      Policies:
+        - !Ref LambdaLoggingPolicy
+        - !Ref DynamoDbBasicPolicy
 
   MicronautLambdaRequestHandler:
     Type: AWS::Serverless::Function
@@ -85,6 +103,7 @@ Resources:
       CodeUri: demo-micronaut-app-lambda-request-handler/target/demo-micronaut-app-lambda-request-handler-1.0.0.jar
       FunctionName: workshop-micronaut-lambda-request-handler
       Handler: com.atn.digital.user.adapters.in.handler.UserRequestHandler::execute
+      AutoPublishAlias: workshop
       Events:
         GetOne:
           Type: Api
@@ -96,13 +115,17 @@ Resources:
           Properties:
             Path: /micronaut-request-handler/users
             Method: POST
+      Policies:
+        - !Ref LambdaLoggingPolicy
+        - !Ref DynamoDbBasicPolicy
 
   PlainJavaLambdaRequestHandler:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: demo-plain-java-app-lambda-request-handler/target/demo-plain-java-app-lambda-request-handler-1.0.0.jar
+      CodeUri: demo-plain-java-app-lambda-handler/target/demo-plain-java-app-lambda-handler-1.0.0.jar
       FunctionName: workshop-plain-java-lambda-request-handler
       Handler: com.atn.digital.user.adapters.in.handler.UserRequestHandler::handleRequest
+      AutoPublishAlias: workshop
       Events:
         GetOne:
           Type: Api
@@ -114,6 +137,9 @@ Resources:
           Properties:
             Path: /plain-java-request-handler/users
             Method: POST
+      Policies:
+        - !Ref LambdaLoggingPolicy
+        - !Ref DynamoDbBasicPolicy
 
   DynamoDbTable:
     Type: AWS::Serverless::SimpleTable
@@ -124,9 +150,6 @@ Resources:
         Type: String
 
 Outputs:
-  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
-  # Find out more about other implicit resources you can reference within SAM
-  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
   WorkshopApiUrl:
     Description: "API Gateway endpoint URL for Prod stage for Product Api function"
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com"

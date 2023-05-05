@@ -9,11 +9,12 @@ if [ "$#" -ne 2 ]; then
 fi
 
 APP=$1
+AWS_REGION=$2
 STACK_NAME="workshop-java-lambda-optimizations"
 API_GW_URL=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --query "Stacks[0].Outputs[?OutputKey=='WorkshopApiUrl'].OutputValue" --region $AWS_REGION --output text)
 
-if [ $APP == "plain-java" ] then
-  curl --location --request POST $API_GW_URL'/plain-java-request-handler/users' \
+if [ $APP == "plain-java" ]; then
+  curl --location --request POST $API_GW_URL'/Prod/plain-java-request-handler/users' \
   --header 'Content-Type: application/json' \
   --data-raw '{
     "firstName": "Plain",
@@ -24,8 +25,8 @@ if [ $APP == "plain-java" ] then
   exit 0
 fi
 
-if [ $APP == "serverless-java-container" ] then
-  curl --location --request POST $API_GW_URL'/serverless-java-container/users' \
+if [ $APP == "serverless-java-container" ]; then
+  curl --location --request POST $API_GW_URL'/Prod/serverless-java-container/users' \
   --header 'Content-Type: application/json' \
   --data-raw '{
     "firstName": "Serverless",
@@ -37,8 +38,8 @@ if [ $APP == "serverless-java-container" ] then
 fi
 
 
-if [ $APP == "spring" ] then
-    curl --location --request POST $API_GW_URL'/springboot-function-handler/users' \
+if [ $APP == "spring" ]; then
+    curl --location --request POST $API_GW_URL'/Prod/springboot-function-handler/users' \
       --header 'Content-Type: application/json' \
       --data-raw '{
         "firstName": "Springboot",
@@ -49,8 +50,8 @@ if [ $APP == "spring" ] then
   exit 0
 fi
 
-if [ $APP == "micronaut" ] then
-    curl --location --request POST $API_GW_URL'/micronaut-request-handler/users' \
+if [ $APP == "micronaut" ]; then
+    curl --location --request POST $API_GW_URL'/Prod/micronaut-request-handler/users' \
       --header 'Content-Type: application/json' \
       --data-raw '{
         "firstName": "Micronaut",

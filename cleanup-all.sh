@@ -15,7 +15,7 @@ rm -rf .aws-sam/
 echo "Cleaning mvn build"
 mvn clean
 
-AWS_REGION="$1"
+AWS_REGION=$1
 
 echo "Deleting stack workshop-java-lambda-optimizations"
 sam delete --stack-name workshop-java-lambda-optimizations--region $AWS_REGION
