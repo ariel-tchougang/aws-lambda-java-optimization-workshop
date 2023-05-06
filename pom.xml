@@ -18,7 +18,7 @@
 
     <packaging>pom</packaging>
 
-    <name>demo-lambda-workshop</name>
+    <name>aws-lambda-java-optimization-workshop</name>
     <description>Workshop to optimize Java on AWS Lambda</description>
 
     <properties>
@@ -53,6 +53,7 @@
         <aws-crt-client.version>2.20.22</aws-crt-client.version>
         <aws-lambda-java-events.version>3.11.1</aws-lambda-java-events.version>
         <aws-lambda-java-core.version>1.2.2</aws-lambda-java-core.version>
+        <spring-cloud-function.version>3.2.10</spring-cloud-function.version>
     </properties>
 
     <repositories>
@@ -117,6 +118,18 @@
                 <groupId>com.amazonaws</groupId>
                 <artifactId>aws-lambda-java-events</artifactId>
                 <version>${aws-lambda-java-events.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-function-adapter-aws</artifactId>
+                <version>${spring-cloud-function.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-function-context</artifactId>
+                <version>${spring-cloud-function.version}</version>
             </dependency>
 
             <dependency>

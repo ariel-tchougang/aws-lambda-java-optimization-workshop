@@ -80,7 +80,7 @@ Resources:
     Properties:
       CodeUri: workshop-packages/demo-springboot-app-lambda-function-handler-1.0.0-aws.jar
       FunctionName: workshop-springboot-lambda-function-handler
-      Handler: com.atn.digital.user.adapters.in.handler.UserApiGatewayRequestHandler::handleRequest
+      Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest
       AutoPublishAlias: workshop
       Events:
         GetOne:
