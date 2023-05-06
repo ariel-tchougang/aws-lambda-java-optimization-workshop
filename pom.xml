@@ -52,6 +52,7 @@
         <micronaut.version>3.9.1</micronaut.version>
         <aws-crt-client.version>2.20.22</aws-crt-client.version>
         <aws-lambda-java-events.version>3.11.1</aws-lambda-java-events.version>
+        <aws-lambda-java-core.version>1.2.2</aws-lambda-java-core.version>
     </properties>
 
     <repositories>
@@ -104,6 +105,12 @@
                 <groupId>software.amazon.awssdk</groupId>
                 <artifactId>aws-crt-client</artifactId>
                 <version>${aws-crt-client.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.amazonaws</groupId>
+                <artifactId>aws-lambda-java-core</artifactId>
+                <version>${aws-lambda-java-core.version}</version>
             </dependency>
 
             <dependency>

@@ -21,12 +21,28 @@
 			<artifactId>demo-user-adapters-out-persistence-dynamodb</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-autoconfigure</artifactId>
+        </dependency>
 
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-function-adapter-aws</artifactId>
 			<version>3.2.10</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-function-context</artifactId>
+			<version>3.2.10</version>
+		</dependency>
+
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-lambda-java-core</artifactId>
+        </dependency>
 
 		<dependency>
 			<groupId>com.amazonaws</groupId>
@@ -115,7 +131,15 @@
 						<version>1.0.29.RELEASE</version>
 					</dependency>
 				</dependencies>
+				<configuration>
+					<mainClass>com.atn.digital.user.UserApplication</mainClass>
+				</configuration>
 				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
 					<execution>
 						<id>pre-integration-test</id>
 						<goals>
