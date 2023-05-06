@@ -94,6 +94,12 @@
             </dependency>
 
             <dependency>
+                <groupId>org.springframework.boot.experimental</groupId>
+                <artifactId>spring-boot-thin-layout</artifactId>
+                <version>${wrapper.version}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>software.amazon.awssdk</groupId>
                 <artifactId>dynamodb</artifactId>
                 <version>${software.amazon.awssdk.dynamodb.version}</version>
@@ -279,12 +285,6 @@
                 <groupId>org.fusesource.jansi</groupId>
                 <artifactId>jansi</artifactId>
                 <version>2.4.0</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.boot.experimental</groupId>
-                <artifactId>spring-boot-thin-layout</artifactId>
-                <version>${wrapper.version}</version>
             </dependency>
 
             <dependency>
