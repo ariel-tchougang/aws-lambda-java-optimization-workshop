@@ -190,6 +190,8 @@
 				<artifactId>maven-shade-plugin</artifactId>
 				<configuration>
 					<createDependencyReducedPom>false</createDependencyReducedPom>
+					<shadedArtifactAttached>true</shadedArtifactAttached>
+					<shadedClassifierName>aws</shadedClassifierName>
 				</configuration>
 				<executions>
 					<execution>
