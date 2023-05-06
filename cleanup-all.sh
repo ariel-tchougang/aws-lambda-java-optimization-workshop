@@ -10,7 +10,8 @@ if [ "$#" -ne 1 ]; then
 fi
 
 echo "Removing old build files"
-rm -rf .aws-sam/
+rm -rf .aws-sam
+rm -rf workshop-packages
 
 echo "Cleaning mvn build"
 mvn clean
@@ -18,5 +19,5 @@ mvn clean
 AWS_REGION=$1
 
 echo "Deleting stack workshop-java-lambda-optimizations"
-sam delete --stack-name workshop-java-lambda-optimizations--region $AWS_REGION
+sam delete --stack-name workshop-java-lambda-optimizations --region $AWS_REGION
 
