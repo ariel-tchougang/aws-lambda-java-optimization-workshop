@@ -84,7 +84,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <skipTests>false</skipTests>
-                    <argLine>@{argLine} --enable-preview</argLine>
+                    <argLine>--enable-preview</argLine>
                 </configuration>
                 <executions>
                     <execution>
@@ -107,7 +107,7 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <configuration>
                     <skipTests>false</skipTests>
-                    <argLine>@{argLine} --enable-preview</argLine>
+                    <argLine>--enable-preview</argLine>
                     <threadCount>2</threadCount>
                 </configuration>
                 <executions>
