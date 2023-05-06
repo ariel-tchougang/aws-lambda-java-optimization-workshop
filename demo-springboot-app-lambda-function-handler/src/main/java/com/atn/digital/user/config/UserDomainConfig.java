@@ -12,6 +12,7 @@ import com.atn.digital.user.domain.ports.out.persistence.UserRepositoryAdapter;
 import com.atn.digital.user.domain.services.FindUserByIdService;
 import com.atn.digital.user.domain.services.RegisterNewUserService;
 import org.springframework.context.annotation.Bean;
+import org.springframework.messaging.Message;
 
 import java.util.function.Function;
 
@@ -33,7 +34,7 @@ public class UserDomainConfig {
     }
 
     @Bean
-    public Function<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> userRequestHandler(
+    public Function<Message<APIGatewayProxyRequestEvent>, APIGatewayProxyResponseEvent> userRequestHandler(
             RegisterNewUserUseCase registerNewUserUseCase, FindUserByIdQuery findUserByIdQuery) {
         return new UserRequestHandler(registerNewUserUseCase, findUserByIdQuery);
     }

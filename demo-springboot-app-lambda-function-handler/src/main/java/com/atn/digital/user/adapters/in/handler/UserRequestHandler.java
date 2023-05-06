@@ -1,5 +1,6 @@
 package com.atn.digital.user.adapters.in.handler;
 
+import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.atn.digital.user.domain.exceptions.ConstraintViolationException;
@@ -12,14 +13,11 @@ import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.messaging.Message;
 
 import java.util.function.Function;
 
-public class UserRequestHandler implements Function<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
-
-    private final Logger logger = LoggerFactory.getLogger(UserRequestHandler.class);
+public class UserRequestHandler implements Function<Message<APIGatewayProxyRequestEvent>, APIGatewayProxyResponseEvent> {
     private final Gson gson = new Gson();
 
     private final RegisterNewUserUseCase registerNewUserUseCase;
@@ -32,16 +30,18 @@ public class UserRequestHandler implements Function<APIGatewayProxyRequestEvent,
     }
 
     @Override
-    public APIGatewayProxyResponseEvent apply(APIGatewayProxyRequestEvent event) {
+    public APIGatewayProxyResponseEvent apply(Message<APIGatewayProxyRequestEvent> message) {
+        APIGatewayProxyRequestEvent event = message.getPayload();
         String method = event.getHttpMethod().toUpperCase();
-        logger.debug("httpMethod = " + method);
+        Context context = message.getHeaders().get("aws-context", Context.class);
+        context.getLogger().log("httpMethod = " + method);
 
         switch (method) {
             case "GET" -> {
-                return handleGet(event);
+                return handleGet(event, context);
             }
             case "POST" -> {
-                return handlePost(event);
+                return handlePost(event, context);
             }
             default -> {
                 APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
@@ -51,10 +51,10 @@ public class UserRequestHandler implements Function<APIGatewayProxyRequestEvent,
         }
     }
 
-    private APIGatewayProxyResponseEvent handlePost(APIGatewayProxyRequestEvent event) {
+    private APIGatewayProxyResponseEvent handlePost(APIGatewayProxyRequestEvent event, Context context) {
         try {
             String body = event.getBody();
-            logger.debug("body = " + body);
+            context.getLogger().log("body = " + body);
             RegisterNewUserData userData = gson.fromJson(body, RegisterNewUserData.class);
             RegisterNewUserCommand newUserCommand = new RegisterNewUserCommand(
                     userData.firstName,
@@ -66,16 +66,16 @@ public class UserRequestHandler implements Function<APIGatewayProxyRequestEvent,
             response.setBody(gson.toJson(userId));
             return response;
         } catch (ConstraintViolationException e) {
-            return errorApiGatewayProxyResponseEvent(e.getMessage(), 400);
+            return errorApiGatewayProxyResponseEvent(context, e.getMessage(), 400);
         } catch (Exception e) {
-            return errorApiGatewayProxyResponseEvent( e.getMessage(), 500);
+            return errorApiGatewayProxyResponseEvent(context, e.getMessage(), 500);
         }
     }
 
-    private APIGatewayProxyResponseEvent handleGet(APIGatewayProxyRequestEvent event) {
+    private APIGatewayProxyResponseEvent handleGet(APIGatewayProxyRequestEvent event, Context context) {
 
         if (event.getPathParameters() == null) {
-            return errorApiGatewayProxyResponseEvent("Missing parameter userId", 400);
+            return errorApiGatewayProxyResponseEvent(context, "Missing parameter userId", 400);
         }
 
         try {
@@ -93,16 +93,16 @@ public class UserRequestHandler implements Function<APIGatewayProxyRequestEvent,
             response.setBody(gson.toJson(userDto));
             return response;
         } catch (ConstraintViolationException e) {
-            return errorApiGatewayProxyResponseEvent(e.getMessage(), 400);
+            return errorApiGatewayProxyResponseEvent(context, e.getMessage(), 400);
         } catch (UserNotFoundException e) {
-            return errorApiGatewayProxyResponseEvent(e.getMessage(), 404);
+            return errorApiGatewayProxyResponseEvent(context, e.getMessage(), 404);
         } catch (Exception e) {
-            return errorApiGatewayProxyResponseEvent(e.getMessage(), 500);
+            return errorApiGatewayProxyResponseEvent(context, e.getMessage(), 500);
         }
     }
 
-    private APIGatewayProxyResponseEvent errorApiGatewayProxyResponseEvent(String errorMessage, int statusCode) {
-        logger.error("error message = " + errorMessage);
+    private APIGatewayProxyResponseEvent errorApiGatewayProxyResponseEvent(Context context, String errorMessage, int statusCode) {
+        context.getLogger().log("error message = " + errorMessage);
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
         response.setStatusCode(statusCode);
         response.setBody(errorMessage);

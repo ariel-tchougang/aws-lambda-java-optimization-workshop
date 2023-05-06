@@ -2,6 +2,7 @@ package com.atn.digital.user.adapters.in.handler;
 
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
+import com.atn.digital.user.TestContext;
 import com.atn.digital.user.domain.exceptions.ConstraintViolationException;
 import com.atn.digital.user.domain.exceptions.UserNotFoundException;
 import com.atn.digital.user.domain.models.User;
@@ -16,6 +17,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageHeaders;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -42,6 +45,23 @@ class UserRequestHandlerTest {
         handler = new UserRequestHandler(useCase, query);
     }
 
+    private Message<APIGatewayProxyRequestEvent> wrapRequestEvent(final APIGatewayProxyRequestEvent requestEvent) {
+        return new Message<>() {
+            @Override
+            public APIGatewayProxyRequestEvent getPayload() {
+                return requestEvent;
+            }
+
+            @Override
+            public MessageHeaders getHeaders() {
+                Map<String, Object> map = new HashMap<>();
+                map.put("aws-context", new TestContext());
+                MessageHeaders headers = new MessageHeaders(map);
+                return headers;
+            }
+        };
+    }
+
     @Nested
     class GetWithId {
         @Test
@@ -52,12 +72,13 @@ class UserRequestHandlerTest {
             String id = UUID.randomUUID().toString();
             pathParameters.put("userId", id);
             requestEvent.setPathParameters(pathParameters);
+            Message<APIGatewayProxyRequestEvent> message = wrapRequestEvent(requestEvent);
 
             User user = User.withId(
                     new UserId(id), "firstName", "lastName", "email"
             );
             when(query.findByUserId(any(UserId.class))).thenReturn(user);
-            APIGatewayProxyResponseEvent response = handler.apply(requestEvent);
+            APIGatewayProxyResponseEvent response = handler.apply(message);
 
             assertEquals(200, response.getStatusCode());
             verify(query, times(1)).findByUserId(any(UserId.class));
@@ -103,7 +124,8 @@ class UserRequestHandlerTest {
                 when(query.findByUserId(any(UserId.class))).thenThrow(clazz);
             }
 
-            APIGatewayProxyResponseEvent response = handler.apply(requestEvent);
+            Message<APIGatewayProxyRequestEvent> message = wrapRequestEvent(requestEvent);
+            APIGatewayProxyResponseEvent response = handler.apply(message);
             assertEquals(statusCode, response.getStatusCode());
             verify(query, times(expectedCallNumber)).findByUserId(any(UserId.class));
         }
@@ -120,9 +142,10 @@ class UserRequestHandlerTest {
             body.put("lastName", "firstName");
             body.put("email", "email@unit.test");
             requestEvent.setBody(gson.toJson(body));
+            Message<APIGatewayProxyRequestEvent> message = wrapRequestEvent(requestEvent);
 
             when(useCase.handle(any(RegisterNewUserCommand.class))).thenReturn(new UserId("id"));
-            APIGatewayProxyResponseEvent response = handler.apply(requestEvent);
+            APIGatewayProxyResponseEvent response = handler.apply(message);
 
             assertEquals(201, response.getStatusCode());
             verify(useCase, times(1)).handle(any(RegisterNewUserCommand.class));
@@ -135,7 +158,8 @@ class UserRequestHandlerTest {
             Map<String, String> body = new HashMap<>();
             body.put("firstName", "firstName");
             requestEvent.setBody(gson.toJson(body));
-            APIGatewayProxyResponseEvent response = handler.apply(requestEvent);
+            Message<APIGatewayProxyRequestEvent> message = wrapRequestEvent(requestEvent);
+            APIGatewayProxyResponseEvent response = handler.apply(message);
 
             assertEquals(400, response.getStatusCode());
             verify(useCase, times(0)).handle(any(RegisterNewUserCommand.class));
@@ -150,9 +174,10 @@ class UserRequestHandlerTest {
             body.put("lastName", "firstName");
             body.put("email", "email@unit.test");
             requestEvent.setBody(gson.toJson(body));
+            Message<APIGatewayProxyRequestEvent> message = wrapRequestEvent(requestEvent);
 
             when(useCase.handle(any(RegisterNewUserCommand.class))).thenThrow(new RuntimeException());
-            APIGatewayProxyResponseEvent response = handler.apply(requestEvent);
+            APIGatewayProxyResponseEvent response = handler.apply(message);
 
             assertEquals(500, response.getStatusCode());
         }
@@ -163,8 +188,9 @@ class UserRequestHandlerTest {
         @Test
         void shouldReturnHttpStatus405() {
             APIGatewayProxyRequestEvent requestEvent = new APIGatewayProxyRequestEvent();
+            Message<APIGatewayProxyRequestEvent> message = wrapRequestEvent(requestEvent);
             requestEvent.setHttpMethod("DELETE");
-            APIGatewayProxyResponseEvent response = handler.apply(requestEvent);
+            APIGatewayProxyResponseEvent response = handler.apply(message);
             assertEquals(405, response.getStatusCode());
         }
     }
