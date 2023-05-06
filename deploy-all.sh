@@ -10,10 +10,12 @@ if [ "$#" -ne 2 ]; then
 fi
 
 echo "Removing old build files"
-rm -rf .aws-sam/
+rm -rf workshop-packages
+mkdir workshop-packages
 
 echo "Packaging workshop applications"
 mvn clean package
+cp ./*/target/*-aws.jar ./workshop-packages
 
 echo "Packaging sam application"
 sam package --s3-bucket $UPLOAD_BUCKET --region $AWS_REGION
