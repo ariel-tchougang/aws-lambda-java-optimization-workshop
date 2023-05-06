@@ -80,7 +80,7 @@ Resources:
     Properties:
       CodeUri: workshop-packages/demo-springboot-app-lambda-function-handler-1.0.0-aws.jar
       FunctionName: workshop-springboot-lambda-function-handler
-      Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker
+      Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: userRequestHandler
