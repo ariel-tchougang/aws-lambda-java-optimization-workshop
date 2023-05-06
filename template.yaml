@@ -84,6 +84,7 @@ Resources:
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: userRequestHandler
+          MAIN_CLASS: com.atn.digital.user.UserApplication
       AutoPublishAlias: workshop
       Events:
         GetOne:
