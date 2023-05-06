@@ -10,9 +10,6 @@ import com.atn.digital.user.domain.ports.in.queries.FindUserByIdQuery;
 import com.atn.digital.user.domain.ports.in.usecases.RegisterNewUserCommand;
 import com.atn.digital.user.domain.ports.in.usecases.RegisterNewUserUseCase;
 import com.google.gson.Gson;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.messaging.Message;
 
 import java.util.function.Function;
@@ -57,9 +54,9 @@ public class UserRequestHandler implements Function<Message<APIGatewayProxyReque
             context.getLogger().log("body = " + body);
             RegisterNewUserData userData = gson.fromJson(body, RegisterNewUserData.class);
             RegisterNewUserCommand newUserCommand = new RegisterNewUserCommand(
-                    userData.firstName,
-                    userData.lastName,
-                    userData.email);
+                    userData.firstName(),
+                    userData.lastName(),
+                    userData.email());
             User.UserId userId = registerNewUserUseCase.handle(newUserCommand);
             APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
             response.setStatusCode(201);
@@ -109,14 +106,8 @@ public class UserRequestHandler implements Function<Message<APIGatewayProxyReque
         return response;
     }
 
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Data
-    private class RegisterNewUserData {
-        private String firstName;
-        private String lastName;
-        private String email;
-    }
+
+    private record RegisterNewUserData (String firstName, String lastName, String email) { }
 
     public record UserDto(String id, String firstName, String lastName, String email) { }
 }
