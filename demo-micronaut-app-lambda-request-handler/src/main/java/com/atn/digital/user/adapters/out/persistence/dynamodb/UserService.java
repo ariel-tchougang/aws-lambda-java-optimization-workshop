@@ -9,6 +9,7 @@ import com.atn.digital.user.domain.ports.in.usecases.RegisterNewUserUseCase;
 import com.atn.digital.user.domain.ports.out.persistence.UserRepositoryAdapter;
 import com.atn.digital.user.domain.services.FindUserByIdService;
 import com.atn.digital.user.domain.services.RegisterNewUserService;
+import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 
 @Singleton
@@ -16,6 +17,7 @@ public class UserService {
     private final RegisterNewUserUseCase registerNewUserUseCase;
     private final FindUserByIdQuery findUserByIdQuery;
 
+    @Inject
     public UserService(DynamoDbClientInitializer initializer) {
         UserRepositoryAdapter adapter = new DynamoDbUserRepository(initializer.client());
         registerNewUserUseCase = new RegisterNewUserService(adapter);
