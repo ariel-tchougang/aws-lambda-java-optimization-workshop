@@ -11,9 +11,6 @@ import com.google.gson.Gson;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.function.aws.MicronautRequestHandler;
 import jakarta.inject.Inject;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -107,14 +104,7 @@ public class UserRequestHandler extends MicronautRequestHandler<APIGatewayProxyR
         return response;
     }
 
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Data
-    private class RegisterNewUserData {
-        private String firstName;
-        private String lastName;
-        private String email;
-    }
+    private record RegisterNewUserData (String firstName, String lastName, String email) { }
 
     public record UserDto(String id, String firstName, String lastName, String email) { }
 }
