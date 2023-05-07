@@ -8,6 +8,7 @@ import com.atn.digital.user.domain.exceptions.UserNotFoundException;
 import com.atn.digital.user.domain.models.User;
 import com.atn.digital.user.domain.ports.in.usecases.RegisterNewUserCommand;
 import com.google.gson.Gson;
+import io.micronaut.context.BeanContext;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.function.aws.MicronautRequestHandler;
 import jakarta.inject.Inject;
@@ -20,6 +21,8 @@ public class UserRequestHandler extends MicronautRequestHandler<APIGatewayProxyR
     private final Logger logger = LoggerFactory.getLogger(UserRequestHandler.class);
     private final Gson gson = new Gson();
     private final UserService userService;
+
+    public UserRequestHandler() { this(BeanContext.run().getBean(UserService.class)); }
 
     @Inject
     public UserRequestHandler(UserService userService) {
