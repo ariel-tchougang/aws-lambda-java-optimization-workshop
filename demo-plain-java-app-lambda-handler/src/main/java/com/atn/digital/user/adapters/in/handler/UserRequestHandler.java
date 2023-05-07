@@ -17,8 +17,6 @@ import com.atn.digital.user.domain.services.FindUserByIdService;
 import com.atn.digital.user.domain.services.RegisterNewUserService;
 import com.google.gson.Gson;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 @AllArgsConstructor
@@ -93,7 +91,7 @@ public class UserRequestHandler implements RequestHandler<APIGatewayProxyRequest
             String userId = event.getPathParameters().get("userId");
             User user = findUserByIdQuery.findByUserId(new UserId(userId));
             UserDto userDto = new UserDto(
-                    user.getId().get().getId(),
+                    userId,
                     user.getFirstName(),
                     user.getLastName(),
                     user.getEmail()
@@ -121,14 +119,7 @@ public class UserRequestHandler implements RequestHandler<APIGatewayProxyRequest
         return response;
     }
 
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Data
-    private class RegisterNewUserData {
-        private String firstName;
-        private String lastName;
-        private String email;
-    }
+    private record RegisterNewUserData (String firstName, String lastName, String email) { }
 
     public record UserDto(String id, String firstName, String lastName, String email) { }
 }
