@@ -15,7 +15,7 @@ mkdir .workshop-packages
 
 echo "Packaging workshop applications"
 mvn clean package
-cp ./*/target/*-aws.jar ./workshop-packages
+cp ./*/target/*-aws.jar ./.workshop-packages
 
 echo "Packaging sam application"
 sam package --s3-bucket $UPLOAD_BUCKET --region $AWS_REGION
