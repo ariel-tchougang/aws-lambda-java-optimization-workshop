@@ -1,4 +1,6 @@
 micronaut:
   application:
     name: userMicronaut
-
+  packages:
+    scan:
+      - com.atn.digital.user
