@@ -56,7 +56,7 @@ Resources:
   SpringbootServerlessJavaContainer:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: workshop-packages/demo-springboot-app-lambda-serverless-java-container-1.0.0-aws.jar
+      CodeUri: .workshop-packages/demo-springboot-app-lambda-serverless-java-container-1.0.0-aws.jar
       FunctionName: workshop-springboot-serverless-java-container
       Handler: com.atn.digital.user.StreamLambdaHandler::handleRequest
       AutoPublishAlias: workshop
@@ -78,7 +78,7 @@ Resources:
   SpringbootLambdaFunctionHandler:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: workshop-packages/demo-springboot-app-lambda-function-handler-1.0.0-aws.jar
+      CodeUri: .workshop-packages/demo-springboot-app-lambda-function-handler-1.0.0-aws.jar
       FunctionName: workshop-springboot-lambda-function-handler
       Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest
       Environment:
@@ -104,7 +104,7 @@ Resources:
   MicronautLambdaRequestHandler:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: workshop-packages/demo-micronaut-app-lambda-request-handler-1.0.0-aws.jar
+      CodeUri: .workshop-packages/demo-micronaut-app-lambda-request-handler-1.0.0-aws.jar
       FunctionName: workshop-micronaut-lambda-request-handler
       Handler: io.micronaut.function.aws.proxy.MicronautLambdaContainerHandler
       AutoPublishAlias: workshop
@@ -126,7 +126,7 @@ Resources:
   PlainJavaLambdaRequestHandler:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: workshop-packages/demo-plain-java-app-lambda-handler-1.0.0-aws.jar
+      CodeUri: .workshop-packages/demo-plain-java-app-lambda-handler-1.0.0-aws.jar
       FunctionName: workshop-plain-java-lambda-request-handler
       Handler: com.atn.digital.user.adapters.in.handler.UserRequestHandler::handleRequest
       AutoPublishAlias: workshop

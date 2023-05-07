@@ -10,8 +10,8 @@ if [ "$#" -ne 2 ]; then
 fi
 
 echo "Removing old build files"
-rm -rf workshop-packages
-mkdir workshop-packages
+rm -rf .workshop-packages
+mkdir .workshop-packages
 
 echo "Packaging workshop applications"
 mvn clean package

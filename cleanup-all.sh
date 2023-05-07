@@ -11,7 +11,7 @@ fi
 
 echo "Removing old build files"
 rm -rf .aws-sam
-rm -rf workshop-packages
+rm -rf .workshop-packages
 
 echo "Cleaning mvn build"
 mvn clean
