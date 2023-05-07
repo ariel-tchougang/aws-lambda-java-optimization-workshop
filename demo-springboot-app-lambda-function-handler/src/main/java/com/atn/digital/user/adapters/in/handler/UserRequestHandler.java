@@ -79,7 +79,7 @@ public class UserRequestHandler implements Function<Message<APIGatewayProxyReque
             String userId = event.getPathParameters().get("userId");
             User user = findUserByIdQuery.findByUserId(new User.UserId(userId));
             UserDto userDto = new UserDto(
-                    user.getId().get().getId(),
+                    userId,
                     user.getFirstName(),
                     user.getLastName(),
                     user.getEmail()
