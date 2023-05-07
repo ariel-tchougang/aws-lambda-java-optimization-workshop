@@ -1,7 +1,6 @@
 package com.atn.digital.user.adapters.out.persistence.dynamodb;
 
 import jakarta.inject.Singleton;
-import lombok.RequiredArgsConstructor;
 import software.amazon.awssdk.core.waiters.WaiterResponse;
 import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 import software.amazon.awssdk.services.dynamodb.model.AttributeDefinition;
@@ -22,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Singleton
-@RequiredArgsConstructor
 public class DynamoDbClientInitializer {
     private DynamoDbClient client;
 
@@ -32,18 +30,23 @@ public class DynamoDbClientInitializer {
     private void initialize() {
 
         String uri = System.getProperty("LOCAL_DYNAMODB_URI");
-        if (uri == null) {
-            client = DynamoDbClient.builder().build();
-            System.setProperty("USER_TABLE", System.getenv("TABLE_NAME"));
+        String tableName = System.getProperty("USER_TABLE");
+        boolean isLocalDynamoDbUri = uri != null && !uri.isBlank();
+        
+        if (isLocalDynamoDbUri) {
+            client = DynamoDbClient.builder().endpointOverride(URI.create(uri)).build();
+            createTable(client, tableName);
             return;
         }
-
-        client = DynamoDbClient.builder().endpointOverride(URI.create(uri)).build();
-        String tableName = System.getProperty("USER_TABLE");
-
-        if (!tableExists(client, tableName)) {
-            createTable(client, tableName);
+        
+        client = DynamoDbClient.builder().build();
+        tableName = System.getenv("TABLE_NAME");
+        
+        if (tableName == null) {
+            tableName = "Users";
         }
+        
+        System.setProperty("USER_TABLE", tableName);
     }
 
     @PreDestroy
@@ -58,6 +61,10 @@ public class DynamoDbClientInitializer {
     }
 
     private void createTable(DynamoDbClient client, String tableName) {
+        
+        if (tableExists(client, tableName)) {
+            return;    
+        }
 
         List<KeySchemaElement> keySchema = new ArrayList<>();
         keySchema.add(KeySchemaElement.builder().attributeName("id").keyType(KeyType.HASH.name()).build());
