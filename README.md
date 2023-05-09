@@ -12,8 +12,10 @@
 * DynamoDB Local (docker container amazon/dynamodb-local:latest)
 * org.testcontainers
 * Junit 5
-* jq
-* Artillery
+* npm
+* jq  (On Amazon Linux 2 run: 'sudo yum install jq' )
+* Artillery  (On Amazon Linux 2 run: 'npm install -g artillery@latest' )
+* faker-js
 * AWS SAM CLI
 
 ## About SAM CLI
@@ -362,6 +364,30 @@ chmod 755 *.sh
 
 ```bash
 ./deploy-all.sh UPLOAD_BUCKET AWS_REGION
+```
+
+
+### Install Artillery, jq & faker-js
+
+* Artillery
+```bash
+echo "Installing Artillery"
+npm install -g artillery@latest && 
+
+echo "Testing installation"
+artillery dino
+```
+
+* jq (On Amazon Linux 2)
+```bash
+sudo yum install jq
+```
+
+* faker-js (only if needed, because generated node_modules resources are already provided in folder loadtest)
+```bash
+cd loadtest
+npm init -y && npm install @faker-js/faker
+cd ..
 ```
 
 #### Deployment information
