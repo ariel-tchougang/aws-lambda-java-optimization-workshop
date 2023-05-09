@@ -7,9 +7,12 @@ This application is a user microservice exposing REST endpoints for:
 * Fetching existing user details
 
 A simple Springboot application version (demo-springboot-app) is provided as starting point.
+And a corresponding initial architecture could be the following:
+
+![Alt text](/images/Workshop-Initial-Architecture.png?raw=true "Initial architecture")
 
 ## General purpose
-The purpose of this project is to compare the performance of this application deployed as a lambda function with the following targets:
+The purpose of this project is to compare the performance of this application deployed as aa AWS Lambda function with the following targets:
 * Springboot with serverless java container
 * Springboot with lambda function handler
 * Micronaut with lambda request handler
@@ -17,7 +20,9 @@ The purpose of this project is to compare the performance of this application de
 
 ## Technologies used:
 * Java 17
-* Spring boot 2.7.11
+* AWS Lambda
+* Amazon API Gateway
+* Spring boot 2.6.14
 * Micronaut 3.9.1
 * Lombok
 * Maven
@@ -35,7 +40,7 @@ The Serverless Application Model Command Line Interface (SAM CLI) is an extensio
 To use the SAM CLI, you need the following tools.
 
 * SAM CLI - [Install the SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
-* Java11 - [Install the Java 11](https://docs.aws.amazon.com/corretto/latest/corretto-11-ug/downloads-list.html)
+* Java11 - [Install the Java 17](https://docs.aws.amazon.com/corretto/latest/corretto-17-ug/downloads-list.html)
 * Maven - [Install Maven](https://maven.apache.org/install.html)
 * Docker - [Install Docker community edition](https://hub.docker.com/search/?type=edition&offering=community)
 
