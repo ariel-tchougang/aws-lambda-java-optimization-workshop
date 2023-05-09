@@ -1,0 +1,34 @@
+{
+  "lambdaARN": "arn:aws:lambda:eu-west-1:937597476605:function:workshop-micronaut-lambda-request-handler",
+  "powerValues": [
+    512,
+    1024,
+    1536,
+    2048,
+    2560,
+    3072,
+    4096
+  ],
+  "parallelInvocation": true,
+  "num": 5,
+  "payload": {
+    "resource": "/{proxy+}",
+    "path": "/micronaut-request-handler/users",
+    "httpMethod": "POST",
+    "multiValueHeaders": {
+      "content-type": [
+        "application/json"
+      ]
+    },
+    "pathParameters": {
+      "proxy": "micronaut-request-handler/users"
+    },
+    "requestContext": {
+      "identity": {
+        "userAgent": "curl/7.64.1"
+      }
+    },
+    "body": "{\n \"firstName\": \"user\",\n \"lastName\": \"testing\",\n \"email\": \"user.testing@workshop.com\"}",
+    "isBase64Encoded": false
+  }
+}
