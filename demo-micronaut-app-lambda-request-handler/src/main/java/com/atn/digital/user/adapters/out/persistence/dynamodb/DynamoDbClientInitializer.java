@@ -43,7 +43,7 @@ public class DynamoDbClientInitializer {
         tableName = System.getenv("TABLE_NAME");
         
         if (tableName == null) {
-            tableName = "Users";
+            tableName = "WorkshopUsers";
         }
         
         System.setProperty("USER_TABLE", tableName);

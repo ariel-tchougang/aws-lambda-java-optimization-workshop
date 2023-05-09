@@ -7,4 +7,4 @@ s3_prefix = "workshop-java-lambda-optimizations"
 confirm_changeset = false
 capabilities = "CAPABILITY_IAM"
 image_repositories = []
-parameter_overrides = "DynamoDBTableName=\"Users\""
+parameter_overrides = "DynamoDBTableName=\"WorkshopUsers\""

@@ -21,7 +21,7 @@ Parameters:
   DynamoDBTableName:
     Type: String
     Description: Name of the DynamoDB table to be created by this template
-    Default: Users
+    Default: WorkshopUsers
 
 Resources:
   LambdaLoggingPolicy:

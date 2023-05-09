@@ -12,7 +12,7 @@ public class OutboundAdaptersExtension implements BeforeAllCallback, AfterAllCal
         dynamoDBLocal = new GenericContainer("amazon/dynamodb-local:latest").withExposedPorts(8000);
         dynamoDBLocal.start();
         System.setProperty("LOCAL_DYNAMODB_URI", "http://localhost:" + dynamoDBLocal.getFirstMappedPort());
-        System.setProperty("USER_TABLE", "Users");
+        System.setProperty("USER_TABLE", "WorkshopUsers");
     }
 
     public void afterAll(ExtensionContext extensionContext) throws Exception {

@@ -22,7 +22,7 @@ public class DynamoDbTableCreator {
         // Set your AWS credentials as environment variables or in the ~/.aws/credentials file
 
         DynamoDbClient client = DynamoDbClientFactory.createLocalDbClient(dynamoDbLocalUri);
-        String tableName = "Users";
+        String tableName = "WorkshopUsers";
 
         if (!tableExists(client, tableName)) {
             createTable(client, tableName);

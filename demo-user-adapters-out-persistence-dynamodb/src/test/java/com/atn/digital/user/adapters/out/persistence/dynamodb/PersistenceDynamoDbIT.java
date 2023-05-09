@@ -25,7 +25,7 @@ class PersistenceDynamoDbIT {
 
     @BeforeEach
     public void setUp() {
-        System.setProperty("USER_TABLE", "Users");
+        System.setProperty("USER_TABLE", "WorkshopUsers");
         dynamoDbLocalUri = "http://localhost:" + dynamoDBLocal.getFirstMappedPort();
     }
 
