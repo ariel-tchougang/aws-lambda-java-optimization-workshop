@@ -2,7 +2,7 @@
 
 if [ "$#" -ne 2 ]; then
   echo "Error: This script requires exactly 2 arguments."
-  echo "Usage: ./benchmark.sh TARGET_APP AWS_REGION"
+  echo "Usage: ./test-app.sh TARGET_APP AWS_REGION"
   echo "TARGET_APP in ['plain-java', 'serverless-java-container', 'spring', 'micronaut'"
   echo "Example: ./test-app.sh plain-java eu-west-1"
   exit 1
