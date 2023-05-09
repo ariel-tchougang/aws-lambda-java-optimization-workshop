@@ -2,7 +2,7 @@ package com.atn.digital.user.adapters.out.persistence.dynamodb;
 
 import com.atn.digital.user.domain.models.User;
 import com.atn.digital.user.domain.models.User.UserId;
-import com.atn.digital.user.domain.ports.out.persistence.UserRepositoryAdapter;
+import com.atn.digital.user.domain.ports.out.persistence.UserRepository;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbEnhancedClient;
 import software.amazon.awssdk.enhanced.dynamodb.DynamoDbTable;
 import software.amazon.awssdk.enhanced.dynamodb.Key;
@@ -11,7 +11,7 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 
 import java.util.UUID;
 
-public class DynamoDbUserRepository extends UserRepositoryAdapter {
+public class DynamoDbUserRepository extends UserRepository {
 
     private final DynamoDbClient client;
 

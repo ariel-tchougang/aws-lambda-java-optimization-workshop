@@ -12,7 +12,7 @@ import com.atn.digital.user.domain.models.User.UserId;
 import com.atn.digital.user.domain.ports.in.queries.FindUserByIdQuery;
 import com.atn.digital.user.domain.ports.in.usecases.RegisterNewUserCommand;
 import com.atn.digital.user.domain.ports.in.usecases.RegisterNewUserUseCase;
-import com.atn.digital.user.domain.ports.out.persistence.UserRepositoryAdapter;
+import com.atn.digital.user.domain.ports.out.persistence.UserRepository;
 import com.atn.digital.user.domain.services.FindUserByIdService;
 import com.atn.digital.user.domain.services.RegisterNewUserService;
 import com.google.gson.Gson;
@@ -23,7 +23,7 @@ import software.amazon.awssdk.services.dynamodb.DynamoDbClient;
 public class UserRequestHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
     private static final String TABLE_NAME = System.getenv("TABLE_NAME");
-    private final UserRepositoryAdapter repository;
+    private final UserRepository repository;
     private final RegisterNewUserUseCase registerNewUserUseCase;
     private final FindUserByIdQuery findUserByIdQuery;
 
