@@ -11,7 +11,7 @@ Globals:
     Environment:
       Variables:
         TABLE_NAME: !Ref DynamoDBTableName
-        # JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
+        JAVA_TOOL_OPTIONS: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
     Architectures:
       - x86_64
   Api:
