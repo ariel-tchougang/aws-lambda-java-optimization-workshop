@@ -7,16 +7,20 @@ This application is a user microservice exposing REST endpoints for:
 * Fetching existing user details
 
 A simple Springboot application version (demo-springboot-app) is provided as starting point.
-And a corresponding initial architecture could be the following:
+A corresponding initial architecture could be the following:
 
 ![Alt text](/images/Workshop-Initial-Architecture.png?raw=true "Initial architecture")
 
-## General purpose
-The purpose of this project is to compare the performance of this application deployed as aa AWS Lambda function with the following targets:
+## General purpose and target architecture
+The purpose of this project is to compare the performance of this application deployed as a AWS Lambda function with the following targets:
 * Springboot with serverless java container
 * Springboot with lambda function handler
 * Micronaut with lambda request handler
 * Plain Java with lambda handler
+
+The target architecture is the following:
+
+![Alt text](/images/Workshop-Target-Architecture.png?raw=true "Target architecture")
 
 ## Technologies used:
 * Java 17
