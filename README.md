@@ -429,9 +429,8 @@ OR
 
 You can run your benchmarks all at once.
 ```bash
-./run-all-benchmarks.sh
+./run-all-benchmarks.sh AWS_REGION
 ```
-They'll be executed consecutively with a 30s pause between each. It might take around 6 minutes.
 
 #### Visualize your results
 Then go to CloudWatch Logs Insights:
