@@ -1,15 +1,21 @@
 #!/bin/sh
 
-./benchmark.sh plain-java eu-west-1
+if [ "$#" -ne 1 ]; then
+  echo "Error: This script requires exactly 1 argument."
+  echo "Usage: ./run-all-benchmarks.sh AWS_REGION"
+  echo "Example: ./run-all-benchmarks.sh eu-west-1"
+  exit 1
+fi
 
-sleep 30
+AWS_REGION=$1
 
-./benchmark.sh serverless-java-container eu-west-1
+./benchmark.sh plain-java $AWS_REGION &
 
-sleep 30
 
-./benchmark.sh spring eu-west-1
+./benchmark.sh serverless-java-container $AWS_REGION &
 
-sleep 30
 
-./benchmark.sh micronaut eu-west-1
+./benchmark.sh spring $AWS_REGION &
+
+
+./benchmark.sh micronaut $AWS_REGION &
