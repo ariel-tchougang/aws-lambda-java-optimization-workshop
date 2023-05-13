@@ -372,7 +372,7 @@ chmod 755 *.sh
 * Artillery
 ```bash
 echo "Installing Artillery"
-npm install -g artillery@latest && 
+npm install -g artillery@latest 
 
 echo "Testing installation"
 artillery dino
