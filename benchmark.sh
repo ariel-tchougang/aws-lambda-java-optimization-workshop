@@ -18,6 +18,7 @@ if [ $APP == "plain-java" ]; then
   echo "Running Artillery on plain-java-request-handler"
   artillery run -t $API_GW_URL loadtest/plain-java-request-handler.yaml
   sleep 30
+  echo "End of Artillery on plain-java-request-handler"
   exit 0
 fi
 
@@ -25,6 +26,7 @@ if [ $APP == "serverless-java-container" ]; then
   echo "Running Artillery on serverless-java-container"
   artillery run -t $API_GW_URL loadtest/serverless-java-container.yaml
   sleep 30
+  echo "End of Artillery on serverless-java-container"
   exit 0
 fi
 
@@ -32,6 +34,7 @@ if [ $APP == "spring" ]; then
   echo "Running Artillery on springboot-function-handler"
   artillery run -t $API_GW_URL loadtest/springboot-function-handler.yaml
   sleep 30
+  echo "End of Artillery on springboot-function-handler"
   exit 0
 fi
 
@@ -39,6 +42,7 @@ if [ $APP == "micronaut" ]; then
   echo "Running Artillery on micronaut-request-handler"
   artillery run -t $API_GW_URL loadtest/micronaut-request-handler.yaml
   sleep 30
+  echo "End of Artillery on micronaut-request-handler"
   exit 0
 fi
 
