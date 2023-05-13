@@ -1,5 +1,5 @@
 {
-  "lambdaARN": "arn:aws:lambda:eu-west-1:937597476605:function:workshop-micronaut-lambda-request-handler",
+  "lambdaARN": "arn:aws:lambda:REPLACE_WITH_REGION:REPLACE_WITH_AWS_ACCOUNT_NUMBER:function:workshop-micronaut-lambda-request-handler",
   "powerValues": [
     512,
     1024,
