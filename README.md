@@ -90,7 +90,7 @@ chmod 755 *.sh
 ### Build and deploy the application on AWS Lambda
 
 ```bash
-./deploy-all.sh UPLOAD_BUCKET AWS_REGION
+./deploy-all.sh AWS_REGION
 ```
 
 ### Install Artillery, jq & faker-js
@@ -321,7 +321,7 @@ Globals:
 
 * If you didn't make any changes pertaining to your java code
 ```bash
-./redeploy-all.sh UPLOAD_BUCKET AWS_REGION
+./redeploy-all.sh AWS_REGION
 ```
 
 #### Testing each lambda once to have a first feeling of performance
@@ -381,7 +381,7 @@ Globals:
 
 * If you didn't make any changes pertaining to your java code
 ```bash
-./redeploy-all.sh UPLOAD_BUCKET AWS_REGION
+./redeploy-all.sh AWS_REGION
 ```
 
 #### Testing each lambda once to have a first feeling of performance
