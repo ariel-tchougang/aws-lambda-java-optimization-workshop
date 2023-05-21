@@ -3,7 +3,7 @@
 echo "Clearing screen"
 clear
 
-if [ "$#" -ne 2 ]; then
+if [ "$#" -ne 1 ]; then
   echo "Error: This script requires exactly 1 argument."
   echo "Usage: ./redeploy-all.sh AWS_REGION"
   exit 1
