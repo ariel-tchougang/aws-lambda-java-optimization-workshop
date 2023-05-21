@@ -9,10 +9,10 @@ if [ "$#" -ne 1 ]; then
   exit 1
 fi
 
+AWS_REGION=$1
+
 echo "Packaging sam application"
 sam package --region $AWS_REGION
-
-AWS_REGION=$1
 
 echo "Deploying standard version"
 sam deploy --region $AWS_REGION
