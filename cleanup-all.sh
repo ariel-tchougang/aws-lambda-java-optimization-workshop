@@ -19,5 +19,5 @@ mvn clean
 AWS_REGION=$1
 
 echo "Deleting stack workshop-java-lambda-optimizations"
-sam delete --stack-name workshop-java-lambda-optimizations --region $AWS_REGION
+sam delete --stack-name workshop-java-lambda-optimizations --no-prompts --region $AWS_REGION
 
