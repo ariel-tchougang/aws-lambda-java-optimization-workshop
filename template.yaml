@@ -60,8 +60,8 @@ Resources:
     Properties:
       CodeUri: .workshop-packages/demo-springboot-app-lambda-serverless-java-container-1.0.0-aws.jar
       FunctionName: workshop-springboot-serverless-java-container
-      Handler: com.atn.digital.user.StreamLambdaHandler::handleRequest
-      # Handler: com.atn.digital.user.StreamLambdaHandlerWithPriming::handleRequest
+      Handler: com.atn.digital.user.adapters.in.handler.StreamLambdaHandler::handleRequest
+      # Handler: com.atn.digital.user.adapters.in.handler.StreamLambdaHandlerWithPriming::handleRequest
       # MemorySize: 2560
       AutoPublishAlias: workshop
       Events:
