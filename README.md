@@ -346,7 +346,7 @@ Load test configuration files are stored in folder loadtest.
 OR
 
 ```bash
-./run-all-benchmarks.sh
+./run-all-benchmarks.sh AWS_REGION
 ```
 
 #### Visualize your results
@@ -406,7 +406,7 @@ Load test configuration files are stored in folder loadtest.
 OR
 
 ```bash
-./run-all-benchmarks.sh
+./run-all-benchmarks.sh AWS_REGION
 ```
 
 #### Visualize your results
