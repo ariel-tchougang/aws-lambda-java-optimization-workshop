@@ -66,6 +66,17 @@
 			<groupId>software.amazon.awssdk</groupId>
 			<artifactId>aws-crt-client</artifactId>
 		</dependency>
+        
+        <dependency>
+            <groupId>io.github.crac</groupId>
+            <artifactId>org-crac</artifactId>
+        </dependency>
+        
+        <dependency>
+	    	<groupId>io.micronaut.crac</groupId>
+		    <artifactId>micronaut-crac</artifactId>
+		    <scope>compile</scope>
+	    </dependency>
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>

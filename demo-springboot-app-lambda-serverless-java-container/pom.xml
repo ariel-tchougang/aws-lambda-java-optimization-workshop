@@ -47,6 +47,11 @@
 			<artifactId>aws-serverless-java-container-springboot2</artifactId>
 			<version>1.9.3</version>
 		</dependency>
+        
+        <dependency>
+            <groupId>io.github.crac</groupId>
+            <artifactId>org-crac</artifactId>
+        </dependency>
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>

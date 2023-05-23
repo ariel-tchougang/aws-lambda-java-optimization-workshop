@@ -4,6 +4,7 @@ package com.atn.digital.user.config;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
 import com.atn.digital.user.adapters.in.handler.UserRequestHandler;
+import com.atn.digital.user.adapters.in.handler.UserRequestHandlerWithPriming;
 import com.atn.digital.user.adapters.out.persistence.dynamodb.DynamoDbClientInitializer;
 import com.atn.digital.user.adapters.out.persistence.dynamodb.DynamoDbUserRepository;
 import com.atn.digital.user.domain.ports.in.queries.FindUserByIdQuery;
@@ -37,5 +38,11 @@ public class UserDomainConfig {
     public Function<Message<APIGatewayProxyRequestEvent>, APIGatewayProxyResponseEvent> userRequestHandler(
             RegisterNewUserUseCase registerNewUserUseCase, FindUserByIdQuery findUserByIdQuery) {
         return new UserRequestHandler(registerNewUserUseCase, findUserByIdQuery);
+    }
+
+    @Bean
+    public Function<Message<APIGatewayProxyRequestEvent>, APIGatewayProxyResponseEvent> userRequestHandlerWithPriming(
+            RegisterNewUserUseCase registerNewUserUseCase, FindUserByIdQuery findUserByIdQuery) {
+        return new UserRequestHandlerWithPriming(registerNewUserUseCase, findUserByIdQuery);
     }
 }

@@ -9,7 +9,7 @@ Globals:
     Runtime: java17
     MemorySize: 256
     # SnapStart:
-    #   ApplyOn: PublishedVersions
+      # ApplyOn: PublishedVersions
     Environment:
       Variables:
         TABLE_NAME: !Ref DynamoDBTableName
@@ -61,7 +61,8 @@ Resources:
       CodeUri: .workshop-packages/demo-springboot-app-lambda-serverless-java-container-1.0.0-aws.jar
       FunctionName: workshop-springboot-serverless-java-container
       Handler: com.atn.digital.user.StreamLambdaHandler::handleRequest
-      # MemorySize: 3072
+      # Handler: com.atn.digital.user.StreamLambdaHandlerWithPriming::handleRequest
+      # MemorySize: 2560
       AutoPublishAlias: workshop
       Events:
         GetOne:
@@ -89,6 +90,7 @@ Resources:
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: userRequestHandler
+          # SPRING_CLOUD_FUNCTION_DEFINITION: userRequestHandlerWithPriming
           MAIN_CLASS: com.atn.digital.user.UserApplication
       Events:
         GetOne:
@@ -111,7 +113,8 @@ Resources:
       CodeUri: .workshop-packages/demo-micronaut-app-lambda-request-handler-1.0.0-aws.jar
       FunctionName: workshop-micronaut-lambda-request-handler
       Handler: com.atn.digital.user.adapters.in.handler.UserRequestHandler::handleRequest
-      # MemorySize: 2560
+      # Handler: com.atn.digital.user.adapters.in.handler.UserRequestHandlerWithPriming::handleRequest
+      # MemorySize: 2048
       AutoPublishAlias: workshop
       Events:
         GetOne:
@@ -134,6 +137,7 @@ Resources:
       CodeUri: .workshop-packages/demo-plain-java-app-lambda-handler-1.0.0-aws.jar
       FunctionName: workshop-plain-java-lambda-request-handler
       Handler: com.atn.digital.user.adapters.in.handler.UserRequestHandler::handleRequest
+      # Handler: com.atn.digital.user.adapters.in.handler.UserRequestHandlerWithPriming::handleRequest
       # MemorySize: 2560
       AutoPublishAlias: workshop
       Events:
