@@ -14,7 +14,7 @@ import io.micronaut.crac.OrderedResource;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
 import org.crac.Context;
-// import org.crac.Core;
+import org.crac.Core;
 import org.crac.Resource;
 
 import java.util.UUID;
@@ -29,7 +29,7 @@ public class UserServiceWithPriming implements OrderedResource {
         UserRepository adapter = new DynamoDbUserRepository(initializer.client());
         registerNewUserUseCase = new RegisterNewUserService(adapter);
         findUserByIdQuery = new FindUserByIdService(adapter);
-        // Core.getGlobalContext().register(this);
+        Core.getGlobalContext().register(this);
     }
 
     public UserId handle(RegisterNewUserCommand registerNewUserCommand) {
