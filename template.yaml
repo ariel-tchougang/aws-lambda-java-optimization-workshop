@@ -10,7 +10,7 @@ Globals:
     MemorySize: 256
     # ProvisionedConcurrencyConfig:
     #   ProvisionedConcurrentExecutions: 40
-    # ReservedConcurrentExecutions: 100
+    ReservedConcurrentExecutions: 100
     # SnapStart:
       # ApplyOn: PublishedVersions
     Environment:
@@ -67,9 +67,6 @@ Resources:
       # Handler: com.atn.digital.user.adapters.in.handler.StreamLambdaHandlerWithPriming::handleRequest
       # MemorySize: 2560
       AutoPublishAlias: workshop
-      # ProvisionedConcurrencyConfig:
-      #   ProvisionedConcurrentExecutions: 40
-      # ReservedConcurrentExecutions: 100
       Events:
         GetOne:
           Type: Api
@@ -93,9 +90,6 @@ Resources:
       Handler: org.springframework.cloud.function.adapter.aws.FunctionInvoker::handleRequest
       # MemorySize: 2048
       AutoPublishAlias: workshop
-      # ProvisionedConcurrencyConfig:
-      #   ProvisionedConcurrentExecutions: 40
-      # ReservedConcurrentExecutions: 100
       Environment:
         Variables:
           SPRING_CLOUD_FUNCTION_DEFINITION: userRequestHandler
@@ -125,9 +119,6 @@ Resources:
       # Handler: com.atn.digital.user.adapters.in.handler.UserRequestHandlerWithPriming::handleRequest
       # MemorySize: 2048
       AutoPublishAlias: workshop
-      # ProvisionedConcurrencyConfig:
-      #   ProvisionedConcurrentExecutions: 40
-      # ReservedConcurrentExecutions: 100
       Events:
         GetOne:
           Type: Api
@@ -152,9 +143,6 @@ Resources:
       # Handler: com.atn.digital.user.adapters.in.handler.UserRequestHandlerWithPriming::handleRequest
       # MemorySize: 2560
       AutoPublishAlias: workshop
-      # ProvisionedConcurrencyConfig:
-      #   ProvisionedConcurrentExecutions: 40
-      # ReservedConcurrentExecutions: 100
       Events:
         GetOne:
           Type: Api

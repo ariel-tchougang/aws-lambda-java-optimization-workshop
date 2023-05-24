@@ -65,6 +65,7 @@ For our AWS Lambda function, the default configuration is as following:
 * Memory size: 256 MB
 * Tiered compilation activated: -XX:+TieredCompilation -XX:TieredStopAtLevel=1
 * Architecture: x86_64
+* Reserved concurrency: 100
 
 ## How will we proceed for workshop
 
