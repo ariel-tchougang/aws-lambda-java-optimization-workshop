@@ -7,8 +7,6 @@ import com.atn.digital.user.domain.ports.in.queries.FindUserByIdQuery;
 import com.atn.digital.user.domain.ports.out.persistence.FindUserByIdPort;
 import lombok.RequiredArgsConstructor;
 
-import java.util.Optional;
-
 @RequiredArgsConstructor
 public class FindUserByIdService implements FindUserByIdQuery {
 
@@ -17,10 +15,14 @@ public class FindUserByIdService implements FindUserByIdQuery {
     public User findByUserId(UserId userId) {
         User user = findUserByIdPort.findByUserId(userId);
 
-        if (user == null) {
+        if (!isUserValid(user)) {
             throw new UserNotFoundException("Couldn't find user with id: " + userId.getId());
         }
 
         return user;
+    }
+
+    private boolean isUserValid(User user) {
+        return user != null && user.getId().isPresent();
     }
 }
