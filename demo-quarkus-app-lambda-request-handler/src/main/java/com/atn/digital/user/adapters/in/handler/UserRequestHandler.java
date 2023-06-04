@@ -20,13 +20,13 @@ import jakarta.inject.Named;
 public class UserRequestHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
     @Inject
-    protected UserRepository repository;
+    UserRepository repository;
 
     @Inject
-    protected RegisterNewUserUseCase registerNewUserUseCase;
+    RegisterNewUserUseCase registerNewUserUseCase;
 
     @Inject
-    protected FindUserByIdQuery findUserByIdQuery;
+    FindUserByIdQuery findUserByIdQuery;
 
     private final Gson gson = new Gson();
 
@@ -70,9 +70,9 @@ public class UserRequestHandler implements RequestHandler<APIGatewayProxyRequest
             context.getLogger().log("body = " + body);
             RegisterNewUserData userData = gson.fromJson(body, RegisterNewUserData.class);
             RegisterNewUserCommand newUserCommand = new RegisterNewUserCommand(
-                    userData.firstName,
-                    userData.lastName,
-                    userData.email);
+                    userData.firstName(),
+                    userData.lastName(),
+                    userData.email());
             UserId userId = registerNewUserUseCase.handle(newUserCommand);
             APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent();
             response.setStatusCode(201);
@@ -129,9 +129,5 @@ public class UserRequestHandler implements RequestHandler<APIGatewayProxyRequest
             System.setProperty("USER_TABLE", tableName);
         }
     }
-
-    private record RegisterNewUserData (String firstName, String lastName, String email) { }
-
-    public record UserDto(String id, String firstName, String lastName, String email) { }
 }
 

@@ -105,9 +105,4 @@ public class UserRequestHandler implements Function<Message<APIGatewayProxyReque
         response.setBody(errorMessage);
         return response;
     }
-
-
-    private record RegisterNewUserData (String firstName, String lastName, String email) { }
-
-    public record UserDto(String id, String firstName, String lastName, String email) { }
 }
