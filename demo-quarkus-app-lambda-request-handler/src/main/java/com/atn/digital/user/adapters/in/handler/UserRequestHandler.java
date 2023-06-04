@@ -19,8 +19,6 @@ import jakarta.inject.Named;
 @Named("userRequestHandler")
 public class UserRequestHandler implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
-    protected static final String TABLE_NAME = System.getenv("TABLE_NAME");
-
     @Inject
     protected UserRepository repository;
 
@@ -33,7 +31,7 @@ public class UserRequestHandler implements RequestHandler<APIGatewayProxyRequest
     private final Gson gson = new Gson();
 
     public UserRequestHandler() {
-        System.setProperty("USER_TABLE", TABLE_NAME);
+        loadTableName();
     }
 
     public UserRequestHandler(
@@ -43,7 +41,7 @@ public class UserRequestHandler implements RequestHandler<APIGatewayProxyRequest
         this.repository = repository;
         this.registerNewUserUseCase = registerNewUserUseCase;
         this.findUserByIdQuery = findUserByIdQuery;
-        System.setProperty("USER_TABLE", TABLE_NAME);
+        loadTableName();
     }
 
     @Override
@@ -123,6 +121,13 @@ public class UserRequestHandler implements RequestHandler<APIGatewayProxyRequest
         response.setStatusCode(statusCode);
         response.setBody(errorMessage);
         return response;
+    }
+
+    private void loadTableName() {
+        String tableName = System.getenv("TABLE_NAME");
+        if (tableName != null) {
+            System.setProperty("USER_TABLE", tableName);
+        }
     }
 
     private record RegisterNewUserData (String firstName, String lastName, String email) { }
