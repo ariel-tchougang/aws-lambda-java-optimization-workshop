@@ -206,6 +206,10 @@ Outputs:
     Description: "SpringbootLambdaFunctionHandler ARN"
     Value: !GetAtt SpringbootLambdaFunctionHandler.Arn
 
+  QuarkusLambdaRequestHandler:
+    Description: "QuarkusLambdaRequestHandler ARN"
+    Value: !GetAtt QuarkusLambdaRequestHandler.Arn
+
   MicronautLambdaRequestHandler:
     Description: "MicronautLambdaRequestHandler ARN"
     Value: !GetAtt MicronautLambdaRequestHandler.Arn
