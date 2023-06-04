@@ -15,7 +15,7 @@ import jakarta.ws.rs.core.Response;
 public class FindUserByIdController {
 
     @Inject
-    private FindUserByIdQuery query;
+    FindUserByIdQuery query;
 
     @GET
     @Path("/{userId}")
