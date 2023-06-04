@@ -1,0 +1,11 @@
+quarkus:
+  http:
+    port: 18080
+  log:
+    category:
+      "io.quarkus":
+        level: DEBUG
+      "com.atn.digital.user":
+        level: INFO
+  banner:
+    enabled: true

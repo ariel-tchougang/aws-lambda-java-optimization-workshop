@@ -36,6 +36,7 @@ public class DynamoDbClientInitializer implements DisposableBean {
         String uri = System.getProperty("LOCAL_DYNAMODB_URI");
         if (uri == null) {
             client = DynamoDbClient.builder().build();
+            System.setProperty("USER_TABLE", System.getenv("TABLE_NAME"));
             return;
         }
 

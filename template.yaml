@@ -110,6 +110,33 @@ Resources:
         - !Ref LambdaLoggingPolicy
         - !Ref DynamoDbBasicPolicy
 
+  QuarkusLambdaRequestHandler:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .workshop-packages/demo-quarkus-app-lambda-request-handler.zip
+      FunctionName: workshop-quarkus-lambda-request-handler
+      Handler: io.quarkus.amazon.lambda.runtime.QuarkusStreamHandler::handleRequest
+      # MemorySize: 2048
+      AutoPublishAlias: workshop
+      Environment:
+        Variables:
+          QUARKUS_LAMBDA_HANDLER: userRequestHandler
+          # QUARKUS_LAMBDA_HANDLER: userRequestHandlerWithPriming
+      Events:
+        GetOne:
+          Type: Api
+          Properties:
+            Path: /quarkus-request-handler/users/{id}
+            Method: GET
+        Create:
+          Type: Api
+          Properties:
+            Path: /quarkus-request-handler/users
+            Method: POST
+      Policies:
+        - !Ref LambdaLoggingPolicy
+        - !Ref DynamoDbBasicPolicy
+
   MicronautLambdaRequestHandler:
     Type: AWS::Serverless::Function
     Properties:

@@ -13,42 +13,34 @@ import java.util.UUID;
 
 public class DynamoDbUserRepository extends UserRepository {
 
-    private final DynamoDbClient client;
-
+    private final DynamoDbTable<UserEntity> userTable;
     private final UserEntityMapper mapper = new UserEntityMapper();
 
     public DynamoDbUserRepository(DynamoDbClient client) {
-        this.client = client;
+        userTable = DynamoDbEnhancedClient.builder()
+                .dynamoDbClient(client)
+                .build()
+                .table(System.getProperty("USER_TABLE"), TableSchema.fromBean(UserEntity.class));
     }
 
     public UserId registerNewUser(User user) {
-        DynamoDbTable<UserEntity> table = getUserEntityDynamoDbTable();
         var userId = new UserId(UUID.randomUUID().toString());
         User dbUser = User.withId(
                 userId,
                 user.getFirstName(),
                 user.getLastName(),
                 user.getEmail());
-        table.putItem(mapper.toUserEntity(dbUser));
+        userTable.putItem(mapper.toUserEntity(dbUser));
         return userId;
     }
 
-    UserEntity findByUserId(String uuid) {
-        DynamoDbTable<UserEntity> table = getUserEntityDynamoDbTable();
-        return table.getItem(Key.builder()
-                .partitionValue(uuid)
-                .build());
+    UserEntity findByUserId(String id) {
+        Key key = Key.builder().partitionValue(id).build();
+        return userTable.getItem(key);
     }
 
     public User findByUserId(UserId userId) {
         UserEntity userEntity = findByUserId(userId.getId());
         return mapper.toUser(userEntity);
-    }
-
-    private DynamoDbTable<UserEntity> getUserEntityDynamoDbTable() {
-        return DynamoDbEnhancedClient.builder()
-                .dynamoDbClient(client)
-                .build()
-                .table(System.getProperty("USER_TABLE"), TableSchema.fromBean(UserEntity.class));
     }
 }

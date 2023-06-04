@@ -3,7 +3,7 @@
 if [ "$#" -ne 2 ]; then
   echo "Error: This script requires exactly 2 arguments."
   echo "Usage: ./test-app.sh TARGET_APP AWS_REGION"
-  echo "TARGET_APP in ['plain-java', 'serverless-java-container', 'spring', 'micronaut'"
+  echo "TARGET_APP in ['plain-java', 'serverless-java-container', 'spring', 'micronaut', 'quarkus'"
   echo "Example: ./test-app.sh plain-java eu-west-1"
   exit 1
 fi
@@ -62,8 +62,20 @@ if [ $APP == "micronaut" ]; then
   exit 0
 fi
 
+if [ $APP == "quarkus" ]; then
+    curl --location --request POST $API_GW_URL'/Prod/quarkus-request-handler/users' \
+      --header 'Content-Type: application/json' \
+      --data-raw '{
+        "firstName": "Quarkus",
+        "lastName": "Request-Handler",
+        "email": "quarkus@workshop.demo"
+    }' | jq
+
+  exit 0
+fi
+
 echo "Error: This script requires exactly 2 arguments."
 echo "Usage: ./benchmark.sh TARGET_APP AWS_REGION"
-echo "TARGET_APP in ['plain-java', 'serverless-java-container', 'spring', 'micronaut'"
+echo "TARGET_APP in ['plain-java', 'serverless-java-container', 'spring', 'micronaut', 'quarkus'"
 echo "Example: ./test-app.sh plain-java eu-west-1"
 exit 1

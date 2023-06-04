@@ -32,20 +32,18 @@ class RegisterNewUserIT {
     @Autowired
     private FindUserByIdPort findUserByIdPort;
 
+    private final String baseUrl = "/api/v1/users";
+
     @Test
     void shouldRegisterNewUserWhenWebInputIsValid() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-
         RegisterNewUserWeb webInput = new RegisterNewUserWeb(
                 "Homer",
                 "Simpson",
                 "homer.simpson@unit.test"
         );
-        HttpEntity<RegisterNewUserWeb> request = new HttpEntity<>(webInput, headers);
-
+        HttpEntity<RegisterNewUserWeb> request = getHttpEntity(webInput);
         ResponseEntity<UserIdDto> response =  restTemplate.exchange(
-                "/api/v1/users",
+                baseUrl,
                 HttpMethod.POST,
                 request,
                 UserIdDto.class
@@ -67,12 +65,9 @@ class RegisterNewUserIT {
 
     @Test
     void shouldReturnBadRequestWhenWebInputIsNull() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        HttpEntity<RegisterNewUserWeb> request = new HttpEntity<>(null, headers);
-
+        HttpEntity<RegisterNewUserWeb> request = getHttpEntity(null);
         ResponseEntity<UserIdDto> response =  restTemplate.exchange(
-                "/api/v1/users",
+                baseUrl,
                 HttpMethod.POST,
                 request,
                 UserIdDto.class
@@ -85,13 +80,10 @@ class RegisterNewUserIT {
 
     @Test
     void shouldReturnBadRequestWhenWebInputIsNotValid() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
         RegisterNewUserWeb webInput = new RegisterNewUserWeb("","", "");
-        HttpEntity<RegisterNewUserWeb> request = new HttpEntity<>(webInput, headers);
-
+        HttpEntity<RegisterNewUserWeb> request = getHttpEntity(webInput);
         ResponseEntity<String> response =  restTemplate.exchange(
-                "/api/v1/users",
+                baseUrl,
                 HttpMethod.POST,
                 request,
                 String.class
@@ -99,5 +91,11 @@ class RegisterNewUserIT {
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         Assertions.assertNotNull(response.getBody());
+    }
+
+    private static HttpEntity<RegisterNewUserWeb> getHttpEntity(RegisterNewUserWeb webInput) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        return new HttpEntity<>(webInput, headers);
     }
 }

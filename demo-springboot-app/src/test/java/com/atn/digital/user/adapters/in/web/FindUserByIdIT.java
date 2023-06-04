@@ -30,6 +30,9 @@ class FindUserByIdIT {
 
     @Autowired
     private RegisterNewUserUseCase newUserUseCase;
+
+    private final String baseUrl = "/api/v1/users/{userId}";
+
     @Test
     void shouldFindUserByIdWhenUserIdExists() {
         RegisterNewUserCommand command = new RegisterNewUserCommand(
@@ -41,12 +44,9 @@ class FindUserByIdIT {
         UserId userId = newUserUseCase.handle(command);
         Assertions.assertNotNull(userId);
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        HttpEntity<Void> request = new HttpEntity<>(null, headers);
-
+        HttpEntity<Void> request = getVoidHttpEntity();
         ResponseEntity<UserDto> response =  restTemplate.exchange(
-                "/api/v1/users/{userId}",
+                baseUrl,
                 HttpMethod.GET,
                 request,
                 UserDto.class,
@@ -64,12 +64,9 @@ class FindUserByIdIT {
 
     @Test
     void shouldReturnNotFoundWhenUserIdDoesntExist() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        HttpEntity<Void> request = new HttpEntity<>(null, headers);
-
+        HttpEntity<Void> request = getVoidHttpEntity();
         ResponseEntity<String> response =  restTemplate.exchange(
-                "/api/v1/users/{userId}",
+                baseUrl,
                 HttpMethod.GET,
                 request,
                 String.class,
@@ -82,12 +79,9 @@ class FindUserByIdIT {
 
     @Test
     void shouldReturnMethodNotAllowedWhenPathParamIsNull() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        HttpEntity<Void> request = new HttpEntity<>(null, headers);
-
+        HttpEntity<Void> request = getVoidHttpEntity();
         ResponseEntity<String> response =  restTemplate.exchange(
-                "/api/v1/users/{userId}",
+                baseUrl,
                 HttpMethod.GET,
                 request,
                 String.class,
@@ -100,12 +94,9 @@ class FindUserByIdIT {
 
     @Test
     void shouldReturnMethodNotAllowedWhenPathParamIsEmpty() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        HttpEntity<Void> request = new HttpEntity<>(null, headers);
-
+        HttpEntity<Void> request = getVoidHttpEntity();
         ResponseEntity<String> response =  restTemplate.exchange(
-                "/api/v1/users/{userId}",
+                baseUrl,
                 HttpMethod.GET,
                 request,
                 String.class,
@@ -118,12 +109,9 @@ class FindUserByIdIT {
 
     @Test
     void shouldReturnBadRequestWhenPathParamIsBlank() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Type", "application/json");
-        HttpEntity<Void> request = new HttpEntity<>(null, headers);
-
+        HttpEntity<Void> request = getVoidHttpEntity();
         ResponseEntity<String> response =  restTemplate.exchange(
-                "/api/v1/users/{userId}",
+                baseUrl,
                 HttpMethod.GET,
                 request,
                 String.class,
@@ -132,5 +120,11 @@ class FindUserByIdIT {
 
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         Assertions.assertNotNull(response.getBody());
+    }
+
+    private static HttpEntity<Void> getVoidHttpEntity() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Type", "application/json");
+        return new HttpEntity<>(null, headers);
     }
 }

@@ -17,6 +17,10 @@ echo "Packaging workshop applications"
 mvn clean package
 cp ./*/target/*-aws.jar ./.workshop-packages
 
+echo "Packaging quarkus app"
+cp ./demo-quarkus-app-lambda-request-handler/target/function.zip ./.workshop-packages/
+mv ./.workshop-packages/function.zip ./.workshop-packages/demo-quarkus-app-lambda-request-handler.zip
+
 AWS_REGION=$1
 
 echo "Packaging sam application"

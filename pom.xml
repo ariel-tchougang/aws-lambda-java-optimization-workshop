@@ -12,6 +12,8 @@
         <module>demo-springboot-app</module>
         <module>demo-springboot-app-lambda-serverless-java-container</module>
         <module>demo-springboot-app-lambda-function-handler</module>
+        <module>demo-quarkus-app</module>
+        <module>demo-quarkus-app-lambda-request-handler</module>
         <module>demo-user-adapters-out-persistence-dynamodb</module>
         <module>demo-user-domain</module>
     </modules>
@@ -58,6 +60,9 @@
         <wrapper.version>1.0.29.RELEASE</wrapper.version>
         <org-crac.version>0.1.3</org-crac.version>
         <micronaut-crac.version>1.1.1</micronaut-crac.version>
+        <quarkus-plugin.version>3.1.0.Final</quarkus-plugin.version>
+        <quarkus.platform.version>3.1.0.Final</quarkus.platform.version>
+        <io.quarkiverse.amazonservices.version>2.3.0</io.quarkiverse.amazonservices.version>
     </properties>
 
     <repositories>
@@ -281,6 +286,24 @@
                 <groupId>io.micronaut.test</groupId>
                 <artifactId>micronaut-test-junit5</artifactId>
                 <version>${micronaut.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-bom</artifactId>
+                <version>${quarkus.platform.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-dynamodb</artifactId>
+                <version>${io.quarkiverse.amazonservices.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkiverse.amazonservices</groupId>
+                <artifactId>quarkus-amazon-dynamodb-enhanced</artifactId>
+                <version>${io.quarkiverse.amazonservices.version}</version>
             </dependency>
 
             <dependency>

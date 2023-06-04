@@ -3,7 +3,7 @@
 if [ "$#" -ne 2 ]; then
   echo "Error: This script requires exactly 2 arguments."
   echo "Usage: ./benchmark.sh TARGET_APP AWS_REGION"
-  echo "TARGET_APP in ['plain-java', 'serverless-java-container', 'spring', 'micronaut'"
+  echo "TARGET_APP in ['plain-java', 'serverless-java-container', 'spring', 'micronaut', 'quarkus'"
   echo "Example: ./benchmark.sh plain-java eu-west-1"
   exit 1
 fi
@@ -46,8 +46,16 @@ if [ $APP == "micronaut" ]; then
   exit 0
 fi
 
+if [ $APP == "quarkus" ]; then
+  echo "Running Artillery on micronaut-request-handler"
+  artillery run -t $API_GW_URL loadtest/quarkus-request-handler.yaml
+  sleep 30
+  echo "End of Artillery on quarkus-request-handler"
+  exit 0
+fi
+
 echo "Usage: ./benchmark.sh TARGET_APP AWS_REGION"
-echo "TARGET_APP in ['plain-java', 'serverless-java-container', 'spring', 'micronaut'"
+echo "TARGET_APP in ['plain-java', 'serverless-java-container', 'spring', 'micronaut', 'quarkus'"
 echo "Example: ./benchmark.sh plain-java eu-west-1"
 exit 1
 

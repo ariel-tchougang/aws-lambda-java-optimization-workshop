@@ -7,6 +7,7 @@
 * Amazon API Gateway
 * Spring boot 2.6.14
 * Micronaut 3.9.1
+* Quarkus 3.1.0.Final
 * Lombok
 * Maven
 * DynamoDB Local (docker container amazon/dynamodb-local:latest)
@@ -126,6 +127,7 @@ s3_prefix = "workshop-java-lambda-optimizations"
 Lambda functions: 
     - workshop-springboot-serverless-java-container
     - workshop-springboot-lambda-function-handler
+    - workshop-quarkus-lambda-request-handler
     - workshop-micronaut-lambda-request-handler
     - workshop-plain-java-lambda-request-handler
 ```
@@ -137,7 +139,7 @@ Lambda functions:
 ./test-app.sh TARGET_APP AWS_REGION
 ```
 
-* With TARGET_APP values in ['plain-java', 'serverless-java-container', 'spring', 'micronaut'
+* With TARGET_APP values in ['plain-java', 'serverless-java-container', 'spring', 'micronaut', 'quarkus']
 
 Result will look like:
 ![Alt text](/images/test-app-example-01.png?raw=true "Testing app")
@@ -155,6 +157,7 @@ You can run a benchmark per target (may be in parallel bash windows - by default
   - serverless-java-container
   - spring
   - micronaut
+  - quarkus
 
 OR
 
@@ -169,6 +172,7 @@ Then go to CloudWatch Logs Insights:
 * Select the appropriate log groups
     - /aws/lambda/workshop-springboot-serverless-java-container
     - /aws/lambda/workshop-springboot-lambda-function-handler
+    - /aws/lambda/workshop-quarkus-lambda-request-handler
     - /aws/lambda/workshop-micronaut-lambda-request-handler
     - /aws/lambda/workshop-plain-java-lambda-request-handler
 * Collect your logs using this query:
@@ -311,6 +315,18 @@ Globals:
       FunctionName: workshop-plain-java-lambda-request-handler
       Handler: com.atn.digital.user.adapters.in.handler.UserRequestHandler::handleRequest
       MemorySize: 2560 #SET NEW VALUE HERE
+```
+
+* For Quarkus
+
+```yaml
+    QuarkusLambdaRequestHandler:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: .workshop-packages/demo-quarkus-app-lambda-request-handler.zip
+      FunctionName: workshop-quarkus-lambda-request-handler
+      Handler: io.quarkus.amazon.lambda.runtime.QuarkusStreamHandler::handleRequest
+      MemorySize: 2048 #SET NEW VALUE HERE
 ```
 
 #### Redeploy
