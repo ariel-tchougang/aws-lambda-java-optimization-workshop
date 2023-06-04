@@ -21,7 +21,7 @@ import org.crac.Resource;
 import java.util.UUID;
 
 @Named("userRequestHandlerWithPriming")
-public class UserRequestHandlerWithPriming extends UserRequestHandler
+public class UserRequestHandlerWithPriming
 		implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent>, Resource {
 
 	@Inject
